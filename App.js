@@ -1,136 +1,49 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { ScrollView, RefreshControl, Button, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, FlatList, RefreshControl, Button, StyleSheet, Text, View, TextInput } from 'react-native';
 
 export default function App() {
-/*   const [counter, setCounter] = useState(0);
-  const [name, setName] = useState("Name: TRAN VAN QUY");
-  const decreaseCounter = ()=> {setCounter(counter - 1)}; */
-  const [items, setItems] = useState([
-    {key:  1, title: "title 1"},
-    {key:  2, title: "title 2"},
-    {key:  3, title: "title 3"},
-    {key:  4, title: "title 4"},
-    {key:  5, title: "title 5"},
-    {key:  6, title: "title 6"},
-    {key:  7, title: "title 7"},
-    {key:  8, title: "title 8"},
-    {key:  9, title: "title 9"},
-    { key: 10, title: "title 10" },
-    { key: 11, title: "title 11" },
-    { key: 12, title: "title 12" },
-    { key: 13, title: "title 13" },
-    { key: 14, title: "title 14" },
-    { key: 15, title: "title 15" },
-    { key: 16, title: "title 16" },
-    { key: 17, title: "title 17" },
-    { key: 18, title: "title 18" },
-    { key: 19, title: "title 19" },
-  ]);
-  const [refreshing, setRefreshing] = useState(false);
-  const onRefresh = () => { setRefreshing(true) 
-    setItems([...items,
-    {
-      key: 20,
-      title: "title 20",
-    },
-    {
-      key: 21,
-      title: "title 21",
-    },
-    {
-      key: 22,
-      title: "title 22",
-    },
-  ]);
-  setRefreshing(false);
-};
+  const [ name, setName] = useState("");
+  const [ adress, setAdress] = useState("");
   return (
-      <ScrollView
-          refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-      }
-      style={styles.container}
-    >
-        {items.map((item) => {
-          return(
-        <View style = {{backgroundColor:"red" , fontSize: 30,margin: 10,  alignItems:"center",
-        justifyContent: "center",}} key={item.key}>
-          <Text style = {styles.Text}>
-            Title: {item.title}
-          </Text>
-        </View>
-      );
-})}
-        
-     {/*  <Text style={styles.Text}>Hello Word!!!</Text>
-
-      <Text 
-      style={{ backgroundColor:'blue', fontSize: 20 }}
-      >
-        Counter: {counter}
-      </Text>
-<Text>
-{name}
-</Text>
-      <Button 
-      onPress={()=> setCounter(counter + 1)} 
-      title="Increase" 
-      color="#003300"
-     />
-      <Button 
-      onPress={decreaseCounter} 
-      title="Decrease" 
-      color= "#3366FF" 
-      />
-      <StatusBar/> */}
-{/* <View style = {styles.View}>
-      <Text>View 1</Text>
+    <View style = {styles.view}> 
+      <Text style = {styles.Text}>TEXT INPUT AND KEYBOARD</Text>
+      <TextInput 
+      style = {styles.input}
+      onChangeText = {(Value) => setName (Value)}
+      placeholder = "Enter your name"/>
+      <TextInput
+      style = {styles.input}
+      onChangeText = {(value) => setAdress (value)}
+      placeholder = "Enter ur adress"></TextInput> 
+      <Text style = {styles.Text}> Your mame is: {name}</Text>
+      <Text style = {styles.Text}> Your Adress: {adress}</Text>
     </View>
-    <View style = {styles.View2}>
-      <Text>View 2</Text>
-    </View>
-    <View style = {styles.View3}>
-      <Text>View 3</Text>
-    </View> */}
-    </ScrollView>     
   );
 }
 
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,  
-/*    flexDirection: "column", */
-    backgroundColor: '#fff',
-  /*   alignItems: 'center',
-    justifyContent: 'center', */
+  view: 
+  {
+    flex:1,
+    alignItems: "center",
+    justifyContent: "center",
   },
- /*  View: {
-    flex: 5,
-    height:100,
-    width: 100,
-    backgroundColor: "green",
-    alignItems:"center",
-    justifyContent:"center",
+  Text:
+  {
+    textTransform:"none",
+    color: "black",
+    fontSize: 20,
   },
-   View2: {
-    flex: 2,
-    height:100,
-    width: 100,
-    backgroundColor: "blue",
-    alignItems:"center",
-    justifyContent:"center",
-  },
-  View3: {
-    flex: 2,
-    height:100,
-    width: 100,
-    backgroundColor: "red",
-    alignItems:"center",
-    justifyContent:"center",
-  }, */
-  Text:{
-    backgroundColor:"red",
-    fontSize:30
+  input:
+  {
+    fontSize: 20,
+    margin: 20,
+    height: 50,
+    width:"90%",
+    borderWidth:1,
+    borderColor: "red",
+    padding: 10,
   },
 });
