@@ -5,23 +5,44 @@ import { ScrollView, FlatList, RefreshControl, Button, StyleSheet, Text, View, T
 export default function App() {
   const [ name, setName] = useState("");
   const [ adress, setAdress] = useState("");
+  const [ submitted, setSubmitted] = useState (false);
+  const clear = () => {
+    setSubmitted(false),
+    setName(""),
+    setAdress("")
+  }
   return (
     <View style = {styles.view}> 
       <Text style = {styles.Text}>TEXT INPUT AND KEYBOARD</Text>
       <TextInput 
+      value = {name}
       style = {styles.input}
       onChangeText = {(Value) => setName (Value)}
       placeholder = "Enter your name"/>
       <TextInput
+      value = {adress}
       style = {styles.input}
       onChangeText = {(value) => setAdress (value)}
       placeholder = "Enter ur adress"></TextInput> 
-      <Text style = {styles.Text}> Your mame is: {name}</Text>
-      <Text style = {styles.Text}> Your Adress: {adress}</Text>
+      <Button
+      title = "Press"
+      onPress = {() => setSubmitted(true)} >
+      </Button>
+    {submitted ?
+      (
+      <View>
+      <Text style = {styles.Text}> Your name is: {name}</Text>
+      <Text style = {styles.Text}> Your adress is: {adress}</Text>
+      </View>
+      ) : (<Text style ={{ padding: 20,}}> Nothing to show</Text>)}
+      <Button
+      color = "red"
+      title = "clear"
+      onPress = {clear}>
+      </Button>
     </View>
   );
 }
-
 
 const styles = StyleSheet.create({
   view: 
