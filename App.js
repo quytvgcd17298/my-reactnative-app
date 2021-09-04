@@ -1,49 +1,68 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { ScrollView, FlatList, RefreshControl, Button, StyleSheet, Text, View, TextInput } from 'react-native';
+import { ScrollView, FlatList, RefreshControl, Button, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 
 export default function App() {
-  const [ name, setName] = useState("");
-  const [ adress, setAdress] = useState("");
-  const [ submitted, setSubmitted] = useState (false);
-  const clear = () => {
-    setSubmitted(false),
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const [submit, setSubmit] = useState(false);
+/*   const clear = () => {
+    setSubmit(false),
     setName(""),
-    setAdress("")
+    setAddress("")
+  } */
+  const clear = () => {setSubmit(!submit);
+  if(submit)
+  {
+    setName("");
+    setAddress("");
   }
+}
   return (
-    <View style = {styles.view}> 
-      <Text style = {styles.Text}>TEXT INPUT AND KEYBOARD</Text>
-      <TextInput 
+    <View style = {styles.view}>
+      <Text style = {styles.Text}> TEXT INPUT AND KEYBOARD </Text>
+    <TextInput
+      style = {styles.input}
+      onChangeText = {(value) => setName(value)}
+      placeholder = "Enter your name"
       value = {name}
+    ></TextInput>
+    <TextInput
       style = {styles.input}
-      onChangeText = {(Value) => setName (Value)}
-      placeholder = "Enter your name"/>
-      <TextInput
-      value = {adress}
-      style = {styles.input}
-      onChangeText = {(value) => setAdress (value)}
-      placeholder = "Enter ur adress"></TextInput> 
-      <Button
-      title = "Press"
-      onPress = {() => setSubmitted(true)} >
-      </Button>
-    {submitted ?
+      onChangeText = {(value) => setAddress(value)}
+      placeholder = "Enter your address"
+      value = {address}
+    ></TextInput>
+    <TouchableOpacity
+    style = {styles.touch}
+    title = "submit"
+    onPress = {clear}
+    >
+      <Text
+      style = {styles.Text}>
+        { submit? "CLEAR" : "SUBMIT"}
+      </Text>
+    </TouchableOpacity>
+{/*     <Button 
+      title="View"
+      onPress = {()=>setSubmit(true)}
+    ></Button> */}
+      {submit?
       (
       <View>
-      <Text style = {styles.Text}> Your name is: {name}</Text>
-      <Text style = {styles.Text}> Your adress is: {adress}</Text>
+      <Text style = {styles.Text}>Your name is: {name}</Text> 
+      <Text style = {styles.Text}>Your address is: {address}</Text>
+      {/* <Button
+      title = "Clear"
+      onPress = {(clear)}>
+      </Button> */}
       </View>
-      ) : (<Text style ={{ padding: 20,}}> Nothing to show</Text>)}
-      <Button
-      color = "red"
-      title = "clear"
-      onPress = {clear}>
-      </Button>
+      )
+      : (<Text style = {styles.Text}> Nothing to show </Text>)}
+     
     </View>
-  );
+  )
 }
-
 const styles = StyleSheet.create({
   view: 
   {
@@ -67,4 +86,13 @@ const styles = StyleSheet.create({
     borderColor: "red",
     padding: 10,
   },
+  touch:
+  {
+    borderWidth: 5,
+    backgroundColor: "blue",
+    fontSize: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 60,
+  }
 });
