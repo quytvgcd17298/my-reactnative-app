@@ -1,22 +1,59 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { ScrollView, FlatList, RefreshControl, Button, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { ScrollView, 
+         FlatList, 
+         RefreshControl,
+         Button, 
+         StyleSheet, 
+         Text, 
+         View, 
+         TextInput, 
+         TouchableOpacity, 
+         Alert } from 'react-native';
 
 export default function App() {
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [submit, setSubmit] = useState(false);
-/*   const clear = () => {
-    setSubmit(false),
-    setName(""),
-    setAddress("")
-  } */
-  const clear = () => {setSubmit(!submit);
-  if(submit)
-  {
+ /*  const clear = () => {
+    setSubmit(false);
     setName("");
     setAddress("");
-  }
+  } */
+  const clear = () => {
+    if( name.length < 3 || address.length < 3)
+    {
+      Alert.alert("SOS",
+        "Name and address must be longer than 3 characters",
+      [
+        {
+          text: "Ok",
+          onPress: () => console.warn("Ok Pressed !!!"),
+        },
+        {
+          text: "Cancel",
+          onPress: () => console.warn("Cancel Pressed !!!"),
+        },
+        {
+          text: "Do not show again",
+          onPress: () => console.warn("Do not show again Pressed !!!"),
+        },
+      ],
+      {
+        cancelable: true,
+        onDismiss: () => console.warn("Alert Canceled!!!"),
+      }
+    );
+    }
+    else
+    {
+      setSubmit(!submit);
+      if(submit)
+      {
+        setName("");
+        setAddress("");
+      }
+    }
 }
   return (
     <View style = {styles.view}>
