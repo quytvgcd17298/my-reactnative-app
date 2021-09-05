@@ -9,7 +9,9 @@ import { ScrollView,
          View, 
          TextInput, 
          TouchableOpacity, 
-         Alert } from 'react-native';
+         Alert, 
+         ToastAndroid,
+         ToolbarAndroidComponent} from 'react-native';
 
 export default function App() {
   const [name, setName] = useState("");
@@ -23,7 +25,14 @@ export default function App() {
   const clear = () => {
     if( name.length < 3 || address.length < 3)
     {
-      Alert.alert("SOS",
+      ToastAndroid.showWithGravityAndOffset
+      (" Name and address must be longer than 3 characters",
+      ToastAndroid.SHORT,
+      ToastAndroid.BOTTOM,
+      0,
+      800,
+      );
+/*       Alert.alert("SOS",
         "Name and address must be longer than 3 characters",
       [
         {
@@ -43,7 +52,7 @@ export default function App() {
         cancelable: true,
         onDismiss: () => console.warn("Alert Canceled!!!"),
       }
-    );
+    ); */
     }
     else
     {
