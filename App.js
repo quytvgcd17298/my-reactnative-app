@@ -12,6 +12,8 @@ import { ScrollView,
          Alert, 
          ToastAndroid,
          ToolbarAndroidComponent} from 'react-native';
+import CustomButton from './components/CustomButton';
+
 
 export default function App() {
   const [name, setName] = useState("");
@@ -66,7 +68,7 @@ export default function App() {
 }
   return (
     <View style = {styles.view}>
-      <Text style = {styles.Text}> TEXT INPUT AND KEYBOARD </Text>
+      <Text style = {styles.Text}> TEXT INPUT AND KEYBOARD !</Text>
     <TextInput
       style = {styles.input}
       onChangeText = {(value) => setName(value)}
@@ -79,7 +81,7 @@ export default function App() {
       placeholder = "Enter your address"
       value = {address}
     ></TextInput>
-    <TouchableOpacity
+{/*     <TouchableOpacity
     style = {styles.touch}
     title = "submit"
     onPress = {clear}
@@ -88,11 +90,16 @@ export default function App() {
       style = {styles.Text}>
         { submit? "CLEAR" : "SUBMIT"}
       </Text>
-    </TouchableOpacity>
+    </TouchableOpacity> */}
+    <CustomButton
+    HandleClear = {clear}
+    text = {submit? 'CLEAR' : 'SUBMIT'}
+    ></CustomButton>
 {/*     <Button 
       title="View"
       onPress = {()=>setSubmit(true)}
     ></Button> */}
+
       {submit?
       (
       <View>
@@ -103,10 +110,8 @@ export default function App() {
       onPress = {(clear)}>
       </Button> */}
       </View>
-      )
-      : (<Text style = {styles.Text}> Nothing to show </Text>)}
-     
-    </View>
+      ) : (<Text style = {styles.Text}> Nothing to show </Text>)}   
+     </View>
   )
 }
 const styles = StyleSheet.create({
@@ -131,14 +136,5 @@ const styles = StyleSheet.create({
     borderWidth:1,
     borderColor: "red",
     padding: 10,
-  },
-  touch:
-  {
-    borderWidth: 5,
-    backgroundColor: "blue",
-    fontSize: 20,
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 60,
-  }
+  }, 
 });
