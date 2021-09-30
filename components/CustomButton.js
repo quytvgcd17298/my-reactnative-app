@@ -23,12 +23,14 @@ const styles = StyleSheet.create(
     },
     touch:
   {
-    borderWidth: 5,
-    backgroundColor: "blue",
-    fontSize: 20,
+    width: 150,
+    height: 50,
+    borderWidth: 3,
+    backgroundColor: "lightblue",
+    fontSize: 250,
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 60,
+    borderRadius: 10,
   }
 })
 
