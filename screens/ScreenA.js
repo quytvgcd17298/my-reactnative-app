@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Octicons } from '@expo/vector-icons'; 
 
 export default function ScreenA({navigation}) {
     const ScreenHandle = () => {
@@ -7,6 +8,7 @@ export default function ScreenA({navigation}) {
     };
     return (
         <View style = {styles.body}>
+            <Octicons name="person" size={30} color= "black" />
             <Text style = {styles.text}>Screen A</Text>
             <TouchableOpacity
             style ={styles.button}
