@@ -8,7 +8,7 @@ export default function ScreenB({navigation}) {
     };
     return (
         <View style = {styles.body}>
-            <Octicons name="three-bars" size={30} color="black" />
+            <Octicons name="three-bars" size={30} color="black"  />
             <Text style = {styles.text}>Screen B</Text>
             <TouchableOpacity
             style ={styles.button}

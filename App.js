@@ -9,7 +9,6 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React from 'react';
 import ScreenA from './screens/ScreenA';
 import ScreenB from './screens/ScreenB';
-import { AntDesign } from '@expo/vector-icons'; 
 import { Octicons } from '@expo/vector-icons'; 
 
 
@@ -37,8 +36,8 @@ export default function App() {
      },
     })}
      >
-     <Tab.Screen name = "ScreenA" component = {ScreenA}/>
-     <Tab.Screen name = "ScreenB" component = {ScreenB}/>
+     <Tab.Screen name = "ScreenA" component = {ScreenA} options={{ tabBarBadge: 3 }}/>
+     <Tab.Screen name = "ScreenB" component = {ScreenB} options={{ tabBarBadge: 1 }}/>
      </Tab.Navigator>
    </NavigationContainer>
   );
