@@ -2,7 +2,9 @@ import React from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { Octicons } from '@expo/vector-icons'; 
 
-export default function ScreenB({navigation}) {
+const ScreenB = ({navigation, route}) =>{
+    const {name} =route.params;
+    const {id} =route.params;
     const ScreenHandle = () => {
         navigation.navigate('ScreenA');
     };
@@ -16,6 +18,10 @@ export default function ScreenB({navigation}) {
             >
                 <Text style = {{fontSize: 20}}>Go to ScreenA</Text>
             </TouchableOpacity>
+            <View>
+            <Text style={styles.text}>Your name: {name}</Text>
+            <Text style={styles.text}>Your Id: {id}</Text> 
+            </View>
         </View>
     )
 }
@@ -40,5 +46,14 @@ const styles = StyleSheet.create({
         margin: 20,
         borderRadius: 10,
         borderWidth:2,
-    }
+    },
+    input: {
+        height: 40,
+        width: "90%",
+        margin: 12,
+        borderWidth: 1,
+        padding: 10,
+      },
 });
+export default ScreenB;
+
