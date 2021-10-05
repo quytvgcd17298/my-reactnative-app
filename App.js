@@ -21,7 +21,15 @@ export default function App() {
   return (
    <NavigationContainer>
      <Drawer.Navigator
-     initialRouteName = "ScreenB"
+     screenOptions ={{
+       headerShown: true,
+       headerStyle:{
+         backgroundColor: "blue",
+       },
+        headerTitleAlign: "center",
+         headerTintColor: "white"
+     }}
+     initialRouteName = "ScreenA"
      hireStartusBar = {true}
      >
      <Drawer.Screen 
