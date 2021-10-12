@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { Button, View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import { Octicons } from '@expo/vector-icons'; 
 
-const ScreenA = ({navigation}) => {
+const Login = ({navigation}) => {
     const [name, setName] = useState();
-    const [id, setId] = useState();
+    const [password, setPassword] = useState();
     const ScreenHandle = () => {
-        navigation.navigate('ScreenB',{
+        navigation.navigate('Home',{
             name:name,
             id:id
         });
@@ -14,6 +14,7 @@ const ScreenA = ({navigation}) => {
     return (
         <View style = {styles.body}>
             <Octicons name="person" size={30} color= "black" />
+            <Text style = {styles.text}>Login</Text>
             <View>
                 <TextInput
                  style={styles.input}
@@ -22,16 +23,15 @@ const ScreenA = ({navigation}) => {
                  placeholder="Enter name"></TextInput>
                 <TextInput
                 style={styles.input}
-                onChangeText={(value) => setId(value)}
-                value={id}
-                placeholder="Enter Id"></TextInput>
+                onChangeText={(value) => setPassword(value)}
+                value={password}
+                placeholder="Enter password"></TextInput>
             </View>
-            <Text style = {styles.text}>Screen A</Text>
             <TouchableOpacity
             style ={styles.button}
             onPress = {ScreenHandle}
             >
-            <Text style = {{fontSize:20}}>Go to ScreenB</Text>
+            <Text style = {{fontSize:20}}>Go to Home</Text>
             </TouchableOpacity>
 
            
@@ -70,4 +70,4 @@ const styles = StyleSheet.create({
         padding: 10,
     },
 });
-export default ScreenA;
+export default Login;

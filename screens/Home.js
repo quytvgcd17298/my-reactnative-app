@@ -2,21 +2,21 @@ import React from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { Octicons } from '@expo/vector-icons'; 
 
-const ScreenB = ({navigation, route}) =>{
+const Home = ({navigation, route}) =>{
     const {name} =route.params;
     const {id} =route.params;
     const ScreenHandle = () => {
-        navigation.navigate('ScreenA');
+        navigation.navigate('Login');
     };
     return (
         <View style = {styles.body}>
             <Octicons name="three-bars" size={30} color="black"  />
-            <Text style = {styles.text}>Screen B</Text>
+            <Text style = {styles.text}>Home</Text>
             <TouchableOpacity
             style ={styles.button}
             onPress = {ScreenHandle}
             >
-                <Text style = {{fontSize: 20}}>Go to ScreenA</Text>
+                <Text style = {{fontSize: 20}}>Go to Login</Text>
             </TouchableOpacity>
             <View>
             <Text style={styles.text}>Your name: {name}</Text>
@@ -55,5 +55,5 @@ const styles = StyleSheet.create({
         padding: 10,
       },
 });
-export default ScreenB;
+export default Home;
 

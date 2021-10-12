@@ -9,8 +9,8 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createDrawerNavigator} from '@react-navigation/drawer'
 import { Octicons } from '@expo/vector-icons'; 
 import React from 'react';
-import ScreenA from './screens/ScreenA';
-import ScreenB from './screens/ScreenB';
+import Login from './screens/Login';
+import Home from './screens/Home';
 
 
 const Stack = createNativeStackNavigator();
@@ -20,7 +20,7 @@ const Drawer = createDrawerNavigator();
 export default function App() {
   return (
    <NavigationContainer>
-     <Drawer.Navigator
+     <Tab.Navigator
      screenOptions ={{
        headerShown: true,
        headerStyle:{
@@ -29,27 +29,35 @@ export default function App() {
         headerTitleAlign: "center",
          headerTintColor: "white"
      }}
-     initialRouteName = "ScreenA"
-     hireStartusBar = {true}
-     >
-     <Drawer.Screen 
-     name = "ScreenA"
-     component = {ScreenA} 
-     options= {{
-       title: " Screen A bar",
-       drawerIcon: () => (
-          <Octicons name="person" size={30} color= "black" /> ),
-     }}/>
-     <Drawer.Screen 
-     name = "ScreenB" 
-     component = {ScreenB} 
-     options= {{
-      title: " Screen B bar",
-      drawerIcon: () => (
-        <Octicons name="three-bars" size={30} color="black"  />
+     initialRouteName = "Login"
+     screenOptions =
+      {({route}) => ({tabBarIcon:({focused}) =>
+      {
+        if (route.name === "Login") {
+          return(
+            <Octicons name="person" size={30} color= {focused? "blue":"black"} />
+          );
+        }
+        else if(route.name === "Home") {
+          return(
+            <Octicons name="three-bars" size={30} color={focused? "blue":"black"}  />
+          );
+        }
+      }}
       )
-      }}/>
-     </Drawer.Navigator>
+      
+    }
+    
+     >
+     <Tab.Screen 
+     name = "Login"
+     component = {Login} 
+     />
+     <Tab.Screen 
+     name = "Home" 
+     component = {Home} 
+     />
+     </Tab.Navigator>
    </NavigationContainer>
   );
 }
