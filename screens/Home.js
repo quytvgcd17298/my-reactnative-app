@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { StyleSheet, View, Text, Alert } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View, Text, Alert, TextInput } from 'react-native';
 import { Octicons } from '@expo/vector-icons'; 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect } from 'react';
@@ -7,18 +7,7 @@ import CustomButton from '../components/CustomButton';
 
 
 const Home = ({navigation}) =>{
-    const [name, setName] = useState("");
-
-    const logOut = async() =>{
-        try{
-            await AsyncStorage.removeItem("UserName")
-            Alert.alert("Your name is remove!!!")
-            navigation.navigate("Login");
-        }
-        catch(error){
-            console.log(error);
-        }
-    }
+const [name, setName] = useState("");
 
     useEffect(() => {
         getData();
@@ -32,8 +21,28 @@ const Home = ({navigation}) =>{
         }
         } catch (error) {
         console.log(error);
+        }; 
+    }
+    const Logout = async () =>{
+            try{
+                await AsyncStorage.removeItem("UserName")
+                Alert.alert("Your name is remove!!!");
+                setName("");
+                navigation.navigate("Login");
+            }
+            catch(error){
+                console.log(error);
+            }
+        };
+    const UpdateData = async () =>{
+        if(name.length === 0){
+            Alert.alert("Please enter your name")
         }
-};
+        else{
+            await AsyncStorage.setItem("UserName", name);
+            Alert.alert("Your name is updated");
+        }
+    };
     return (
         <View style = {styles.body}>
             <Octicons name="three-bars" size={30} color="black"  />
@@ -43,7 +52,16 @@ const Home = ({navigation}) =>{
             </View>
             <CustomButton
             title = "Logout"
-            handlePress = {logOut}></CustomButton>
+            handlePress = {Logout}></CustomButton>
+             <View style={styles.editInput}>
+                <TextInput
+                 style={styles.input}
+                 onChangeText={(value) => setName(value)}
+                 placeholder="Enter name update"></TextInput>
+                <CustomButton
+            title = "Update"
+            handlePress = {UpdateData}></CustomButton>
+            </View>
         </View>
     )
 }
@@ -56,7 +74,6 @@ const styles = StyleSheet.create({
     text:{
         fontSize: 20,
         margin: 20,
-        textTransform:'uppercase',
         fontWeight:'bold'
     },
     button:{
@@ -71,11 +88,16 @@ const styles = StyleSheet.create({
     },
     input: {
         height: 40,
-        width: "90%",
+        width: 300,
         margin: 12,
         borderWidth: 1,
         padding: 10,
       },
+      editInput:{
+          alignItems:"center",
+          justifyContent:"center",
+
+      }
 });
 export default Home;
 

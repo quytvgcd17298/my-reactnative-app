@@ -7,29 +7,32 @@ import { useEffect } from 'react';
 
 const Login = ({navigation}) => {
     const [name, setName] = useState("");
+    const [password, setPassword] = useState("");
 
-    useEffect(async()=>{
-        checkLogin()
-    } , []);
+    useEffect (()=>{
+        checkLogin();
+    }, []);
     
-    const checkLogin = async()=>{
-        try{
-            const value = await AsyncStorage.getItem("UserName");
-            if(value !== null){
-                navigation.navigate("Home");
-            }
+    const checkLogin = async () => {
+        try {
+          const value = await AsyncStorage.getItem("Username");
+          if (value !== null) {
+            navigation.navigate("Home");
+          }
+        } catch (error) {
+          console.log(error);
         }
-        catch(error){
-            console.log(error);
-        }
-    }
+      };
+
     const ScreenHandle = async () => {
-        if(name.length === 0){
-            Alert.alert("Warnning!!! Your name is empty");
+        if(name.length === 0 || password.length ===0){
+            Alert.alert("Warnning!!! Please enter your name and password");
         }
         else {
             try{
                 await AsyncStorage.setItem("UserName", name);
+                setName("");
+                setPassword("");
                 navigation.navigate("Home");
             }    
             catch(error){
@@ -47,6 +50,12 @@ const Login = ({navigation}) => {
                  onChangeText={(value) => setName(value)}
                  value={name}
                  placeholder="Enter name"></TextInput>
+                 <TextInput
+                 style={styles.input}
+                 onChangeText={(value) => setPassword(value)}
+                 value={password}
+                 placeholder="Enter password"
+                 secureTextEntry = {true}></TextInput>
             </View>
             <CustomButton
             title ="Login"
