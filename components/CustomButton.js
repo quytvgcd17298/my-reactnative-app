@@ -17,7 +17,7 @@ const styles = StyleSheet.create(
     Text:
     {
       textTransform:"none",
-      color: "black",
+      color: "white",
       fontSize: 20,
     },
     touch:
@@ -25,7 +25,7 @@ const styles = StyleSheet.create(
     width: 150,
     height: 50,
     borderWidth: 3,
-    backgroundColor: "lightblue",
+    backgroundColor: "green",
     fontSize: 250,
     alignItems: "center",
     justifyContent: "center",

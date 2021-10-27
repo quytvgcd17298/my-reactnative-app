@@ -7,11 +7,11 @@ import { useEffect } from 'react';
 
 const Login = ({navigation}) => {
     const [name, setName] = useState("");
-   
+
     useEffect(async()=>{
         checkLogin()
     } , []);
-
+    
     const checkLogin = async()=>{
         try{
             const value = await AsyncStorage.getItem("UserName");

@@ -1,12 +1,24 @@
 import React, { useState } from 'react'
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Alert } from 'react-native';
 import { Octicons } from '@expo/vector-icons'; 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect } from 'react';
+import CustomButton from '../components/CustomButton';
 
 
 const Home = ({navigation}) =>{
     const [name, setName] = useState("");
+
+    const logOut = async() =>{
+        try{
+            await AsyncStorage.removeItem("UserName")
+            Alert.alert("Your name is remove!!!")
+            navigation.navigate("Login");
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
 
     useEffect(() => {
         getData();
@@ -29,6 +41,9 @@ const Home = ({navigation}) =>{
             <View>
             <Text style={styles.text}>Your name: {name}</Text>
             </View>
+            <CustomButton
+            title = "Logout"
+            handlePress = {logOut}></CustomButton>
         </View>
     )
 }
