@@ -3,10 +3,26 @@ import {Alert, View, Text, StyleSheet, TextInput } from 'react-native';
 import { Octicons } from '@expo/vector-icons'; 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import CustomButton from "../components/CustomButton";
+import { useEffect } from 'react';
 
 const Login = ({navigation}) => {
     const [name, setName] = useState("");
+   
+    useEffect(async()=>{
+        checkLogin()
+    } , []);
 
+    const checkLogin = async()=>{
+        try{
+            const value = await AsyncStorage.getItem("UserName");
+            if(value !== null){
+                navigation.navigate("Home");
+            }
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
     const ScreenHandle = async () => {
         if(name.length === 0){
             Alert.alert("Warnning!!! Your name is empty");
