@@ -1,14 +1,13 @@
 import React from 'react';
 import { View , TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-const CustomButton = ({ text, HandleClear}) => {
+const CustomButton = (props) => {
     return (
         <View>
              <TouchableOpacity
                 style = {styles.touch}
-                title = "submit"
-                onPress = {HandleClear}>
-             <Text style = {styles.Text}>{text}</Text>
+                onPress = {props.handlePress}>
+             <Text style = {styles.Text}>{props.title}</Text>
              </TouchableOpacity>
         </View>
     )

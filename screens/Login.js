@@ -1,15 +1,25 @@
 import React, { useState } from "react";
-import { Button, View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import {Alert, View, Text, StyleSheet, TextInput } from 'react-native';
 import { Octicons } from '@expo/vector-icons'; 
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import CustomButton from "../components/CustomButton";
 
 const Login = ({navigation}) => {
-    const [name, setName] = useState();
-    const [password, setPassword] = useState();
-    const ScreenHandle = () => {
-        navigation.navigate('Home',{
-            name:name,
-            id:id
-        });
+    const [name, setName] = useState("");
+
+    const ScreenHandle = async () => {
+        if(name.length === 0){
+            Alert.alert("Warnning!!! Your name is empty");
+        }
+        else {
+            try{
+                await AsyncStorage.setItem("UserName", name);
+                navigation.navigate("Home");
+            }    
+            catch(error){
+                console.log(error);
+            }
+        }
     };
     return (
         <View style = {styles.body}>
@@ -21,25 +31,15 @@ const Login = ({navigation}) => {
                  onChangeText={(value) => setName(value)}
                  value={name}
                  placeholder="Enter name"></TextInput>
-                <TextInput
-                style={styles.input}
-                onChangeText={(value) => setPassword(value)}
-                value={password}
-                placeholder="Enter password"></TextInput>
             </View>
-            <TouchableOpacity
-            style ={styles.button}
-            onPress = {ScreenHandle}
-            >
-            <Text style = {{fontSize:20}}>Go to Home</Text>
-            </TouchableOpacity>
+            <CustomButton
+            title ="Login"
+            handlePress = {ScreenHandle}
+            ></CustomButton>
+        </View>  
+    );  
+};
 
-           
-        </View>
-        
-        
-    )  
-}
 const styles = StyleSheet.create({
     body:{
         flex: 1,

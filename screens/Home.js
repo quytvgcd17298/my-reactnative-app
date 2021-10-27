@@ -1,26 +1,33 @@
-import React from 'react'
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react'
+import { StyleSheet, View, Text } from 'react-native';
 import { Octicons } from '@expo/vector-icons'; 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect } from 'react';
 
-const Home = ({navigation, route}) =>{
-    const {name} =route.params;
-    const {id} =route.params;
-    const ScreenHandle = () => {
-        navigation.navigate('Login');
-    };
+
+const Home = ({navigation}) =>{
+    const [name, setName] = useState("");
+
+    useEffect(() => {
+        getData();
+    }, []);
+
+    const getData = async () => {
+        try {
+        const value = await AsyncStorage.getItem("Username");
+        if (value !== null) {
+            setName(value);
+        }
+        } catch (error) {
+        console.log(error);
+        }
+};
     return (
         <View style = {styles.body}>
             <Octicons name="three-bars" size={30} color="black"  />
-            <Text style = {styles.text}>Home</Text>
-            <TouchableOpacity
-            style ={styles.button}
-            onPress = {ScreenHandle}
-            >
-                <Text style = {{fontSize: 20}}>Go to Login</Text>
-            </TouchableOpacity>
+            <Text style = {styles.text}>Wellcome Home</Text>
             <View>
             <Text style={styles.text}>Your name: {name}</Text>
-            <Text style={styles.text}>Your Id: {id}</Text> 
             </View>
         </View>
     )
