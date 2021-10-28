@@ -1,8 +1,4 @@
-import { StyleSheet, 
-         Text, 
-         View,
-         Button, 
-         TouchableOpacity} from 'react-native';
+import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import {createNativeStackNavigator } from 'react-native-screens/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';

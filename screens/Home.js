@@ -4,55 +4,69 @@ import { Octicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect } from 'react';
 import CustomButton from '../components/CustomButton';
+import * as SQLite from 'expo-sqlite';
 
+const db = SQLite.openDatabase("dbName", 1.0);
 
-const Home = ({navigation}) =>{
-const [name, setName] = useState("");
-
+const Home = ({ navigation }) => {
+    const [name, setName] = useState("");
+    const [age, setAge] = useState("");
+    
+    // Call only one time when the component is loaded
     useEffect(() => {
-        getData();
+      getData();
     }, []);
 
     const getData = async () => {
-        try {
-        const value = await AsyncStorage.getItem("Username");
-        if (value !== null) {
-            setName(value);
-        }
-        } catch (error) {
+      try {
+        db.transaction((tx) =>{
+            console.log(123);
+            tx.executeSql("SELECT Name, Age FROM Users", [], (tx, result) =>{
+                console.log(JSON.stringify(result.rows));
+                var len = result.rows.length;
+                console.log(len);
+                if(len > 0){
+                    const userName = result.rows.item(0).Name;
+                    const userAge = result.rows.item(0).Age;
+                    setName(userName);
+                    setAge(userAge);
+                }
+            })
+        })
+      } catch (error) {
         console.log(error);
-        }; 
-    }
-    const Logout = async () =>{
-            try{
-                await AsyncStorage.removeItem("UserName")
-                Alert.alert("Your name is remove!!!");
-                setName("");
-                navigation.navigate("Login");
-            }
-            catch(error){
-                console.log(error);
-            }
-        };
-    const UpdateData = async () =>{
-        if(name.length === 0){
-            Alert.alert("Please enter your name")
-        }
-        else{
-            await AsyncStorage.setItem("UserName", name);
-            Alert.alert("Your name is updated");
-        }
+      }
     };
+    const logout = async () => {
+      try {
+        await AsyncStorage.removeItem("Username");
+        Alert.alert("Removed !!!. Your name is removed !!!");
+        setName("");
+        navigation.navigate("Login");
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    const updateData = async () => {
+      if (name.length === 0) {
+        Alert.alert("Please enter your name");
+      } else {
+        await AsyncStorage.setItem("Username", name);
+        Alert.alert("Your name is updated !!!");
+      }
+    };
+  
     return (
         <View style = {styles.body}>
             <Octicons name="three-bars" size={30} color="black"  />
             <Text style = {styles.text}>Wellcome Home</Text>
             <View>
             <Text style={styles.text}>Your name: {name}</Text>
+            <Text style={styles.text}>Your age: {age}</Text>
             </View>
             <CustomButton
             title = "Logout"
-            handlePress = {Logout}></CustomButton>
+            handlePress = {logout}></CustomButton>
              <View style={styles.editInput}>
                 <TextInput
                  style={styles.input}
@@ -60,11 +74,11 @@ const [name, setName] = useState("");
                  placeholder="Enter name update"></TextInput>
                 <CustomButton
             title = "Update"
-            handlePress = {UpdateData}></CustomButton>
+            handlePress = {updateData}></CustomButton>
             </View>
         </View>
-    )
-}
+    );
+};
 const styles = StyleSheet.create({
     body:{
         flex: 1,

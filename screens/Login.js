@@ -4,42 +4,58 @@ import { Octicons } from '@expo/vector-icons';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import CustomButton from "../components/CustomButton";
 import { useEffect } from 'react';
-
-const Login = ({navigation}) => {
-    const [name, setName] = useState("");
-    const [password, setPassword] = useState("");
-
-    useEffect (()=>{
-        checkLogin();
-    }, []);
+import * as SQLite from 'expo-sqlite';
     
+const db = SQLite.openDatabase("dbName", 1.0);
+
+const Login = ({ navigation }) => {
+    const [name, setName] = useState("");
+    const [age, setAge] = useState("");
+  
+    useEffect(() => {
+        createTable();
+        //checkLogin();
+    }, []);
     const checkLogin = async () => {
+      try {
+        const value = await AsyncStorage.getItem("Username");
+        if (value !== null) {
+          navigation.navigate("Home");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
+    const login = async () => {
+      if (name.length === 0 || age.length === 0) {
+        Alert.alert("Warning !!!. Please enter your name and age !!!");
+      } else {
         try {
-          const value = await AsyncStorage.getItem("Username");
-          if (value !== null) {
-            navigation.navigate("Home");
-          }
+        db.transaction((tx) => {
+        tx.executeSql(
+            "INSERT INTO Users (Name, Age) VALUES (?,?);",
+            [name, age],
+            (tx, results) => {
+                console.log(results.rowsAffected);
+            }
+            );
+        });
+        navigation.navigate("Home");
         } catch (error) {
           console.log(error);
         }
-      };
-
-    const ScreenHandle = async () => {
-        if(name.length === 0 || password.length ===0){
-            Alert.alert("Warnning!!! Please enter your name and password");
-        }
-        else {
-            try{
-                await AsyncStorage.setItem("UserName", name);
-                setName("");
-                setPassword("");
-                navigation.navigate("Home");
-            }    
-            catch(error){
-                console.log(error);
-            }
-        }
+      }
     };
+
+    const createTable = () =>{
+        db.transaction((tx) => {
+            tx.executeSql(
+                "CREATE TABLE IF NOT EXISTS Users(Id INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Age INTEGER);"
+            );
+        });
+    };
+
     return (
         <View style = {styles.body}>
             <Octicons name="person" size={30} color= "black" />
@@ -52,14 +68,14 @@ const Login = ({navigation}) => {
                  placeholder="Enter name"></TextInput>
                  <TextInput
                  style={styles.input}
-                 onChangeText={(value) => setPassword(value)}
-                 value={password}
-                 placeholder="Enter password"
+                 onChangeText={(value) => setAge(value)}
+                 value={age}
+                 placeholder="Enter your age"
                  secureTextEntry = {true}></TextInput>
             </View>
             <CustomButton
             title ="Login"
-            handlePress = {ScreenHandle}
+            handlePress = {login}
             ></CustomButton>
         </View>  
     );  
