@@ -8,6 +8,7 @@ import React from 'react';
 import Login from './screens/Login';
 import Home from './screens/Home';
 import User from './screens/User';
+import UserDetail from './screens/UserDetail';
 
 
 const Stack = createNativeStackNavigator();
@@ -58,6 +59,9 @@ export default function App() {
      name = "User" 
      component = {User} 
      />
+     <Stack.Screen
+     name = "UserDetail"
+     component = {UserDetail}/>
      </Stack.Navigator>
    </NavigationContainer>
   );

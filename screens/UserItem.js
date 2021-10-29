@@ -1,14 +1,18 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 
-const UserItem = ({user}) => {
+const UserItem = ({user, navigation}) => {
     return (
         <View style = {styles.container}>
             <View>
+            <TouchableOpacity
+            onPress={() => navigation.navigate("UserDetail", {user})}>
             <Text style = {styles.id}>{user.Id}</Text>
             <Text style = {styles.text}>{user.Name}</Text>
             <Text style = {styles.text}>{user.Age}</Text>
+            </TouchableOpacity>
             </View>
+
         </View>
     )
 }
@@ -29,9 +33,7 @@ const styles = StyleSheet.create({
 
     },
     id:{
-        flexWrap:'wrap',
         fontSize:28,
-        width:"99%"
     },
     text: {
 

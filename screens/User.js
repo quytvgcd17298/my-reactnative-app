@@ -7,7 +7,7 @@ import UserItem from './UserItem';
 
 const db = SQLite.openDatabase("dbName", 1.0)
 
-const User = () => {
+const User = ({navigation}) => {
     const [user, setUser] = useState({});
     const [data, setData] = useState([]);
 
@@ -43,7 +43,7 @@ const User = () => {
       <FlatList
         data={data}
         keyExtractor={(item) => String(item.Id)}
-        renderItem={({ item }) => <UserItem user={item} />}
+        renderItem={({ item }) => <UserItem user={item} navigation={navigation}  />}
       />
     </View>
     </View>
