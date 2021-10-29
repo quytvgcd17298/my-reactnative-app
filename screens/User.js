@@ -8,27 +8,8 @@ import UserItem from './UserItem';
 const db = SQLite.openDatabase("dbName", 1.0)
 
 const User = () => {
-    const [user, setUser] = useState([ 
-    {
-        Id: 1,
-        Name: "Van Quy",
-        Age: 30,
-    },
-    {
-        Id: 2,
-        Name: "Nhat Huy",
-        Age: 30,
-    },
-    {
-        Id: 3,
-        Name: "Van Hoang",
-        Age: 30,
-    },
-    {
-        Id: 4,
-        Name: "Hoang An",
-        Age: 30,
-    },]);
+    const [user, setUser] = useState({});
+    const [data, setData] = useState([]);
 
     useEffect(() =>{getUser();}, []);
 
@@ -38,7 +19,15 @@ const User = () => {
             tx.executeSql("SELECT * FROM Users", 
             [], 
             (tx, result) =>{
+                var len = result.rows.length;
                 console.log(JSON.stringify(result.rows));
+                for (let i = 0; i< len; i++){
+                    let row = result.rows.item(i);
+                    setData((prevState) =>[
+                        ...prevState,
+                        {Id: row.Id, Name: row.Name, Age: row.Age},
+                    ]);
+                }
             });
         });
         }
@@ -52,7 +41,7 @@ const User = () => {
     <Text style = {{fontSize:25, color:"green", marginBottom:20}}>Show all Users</Text>
     <View style={styles.container}>
       <FlatList
-        data={user}
+        data={data}
         keyExtractor={(item) => String(item.Id)}
         renderItem={({ item }) => <UserItem user={item} />}
       />
