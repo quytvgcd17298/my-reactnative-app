@@ -7,6 +7,7 @@ import { Octicons } from '@expo/vector-icons';
 import React from 'react';
 import Login from './screens/Login';
 import Home from './screens/Home';
+import User from './screens/User';
 
 
 const Stack = createNativeStackNavigator();
@@ -16,8 +17,8 @@ const Drawer = createDrawerNavigator();
 export default function App() {
   return (
    <NavigationContainer>
-     <Tab.Navigator
-     screenOptions ={{
+     <Stack.Navigator
+     /* screenOptions ={{
        headerShown: true,
        headerStyle:{
          backgroundColor: "blue",
@@ -43,17 +44,21 @@ export default function App() {
       )
       
     }
-    
+     */
      >
-     <Tab.Screen 
+     <Stack.Screen 
      name = "Login"
      component = {Login} 
      />
-     <Tab.Screen 
+     <Stack.Screen 
      name = "Home" 
      component = {Home} 
      />
-     </Tab.Navigator>
+     <Stack.Screen 
+     name = "User" 
+     component = {User} 
+     />
+     </Stack.Navigator>
    </NavigationContainer>
   );
 }

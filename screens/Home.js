@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect } from 'react';
 import CustomButton from '../components/CustomButton';
 import * as SQLite from 'expo-sqlite';
+import User from './User';
 
 const db = SQLite.openDatabase("dbName", 1.0);
 
@@ -17,7 +18,11 @@ const Home = ({ navigation }) => {
       getData();
     }, []);
 
-    const getData = async () => {
+    const User = () => {
+      navigation.navigate("User")
+    };
+
+    const getData = () => {
       try {
         db.transaction((tx) =>{
             console.log(123);
@@ -104,6 +109,12 @@ const Home = ({ navigation }) => {
                 <CustomButton
             title = "Update"
             handlePress = {updateData}></CustomButton>
+            <View
+            style = {{margin: 15}}>
+            <CustomButton
+            title = "Show User"
+            handlePress = {User}></CustomButton>
+            </View>   
             </View>
         </View>
     );
