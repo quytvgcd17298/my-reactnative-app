@@ -38,21 +38,50 @@ const Home = ({ navigation }) => {
       }
     };
     const logout = async () => {
-      try {
+      /* try {
         await AsyncStorage.removeItem("Username");
         Alert.alert("Removed !!!. Your name is removed !!!");
         setName("");
         navigation.navigate("Login");
       } catch (error) {
         console.log(error);
+      } */
+
+      try{
+        db.transaction((tx) => {
+          tx.executeSql("DELETE FROM Users WHERE id = 1", [],
+          (tx, result) =>{
+            navigation.navigate("Login"); 
+          })
+        })
+      }
+      catch(error){
+        console.log(error);
       }
     };
     const updateData = async () => {
-      if (name.length === 0) {
+      /* if (name.length === 0) {
         Alert.alert("Please enter your name");
       } else {
         await AsyncStorage.setItem("Username", name);
         Alert.alert("Your name is updated !!!");
+      } */
+      if (name.length === 0) {
+        Alert.alert("Please enter your update name");
+      } else {
+        try{
+          db.transaction((tx)=>{
+            tx.executeSql("UPDATE Users set name =? WHERE id = 2",
+             [name], 
+             (tx, result) => {
+               Alert.alert("Your name is updated !")
+             }
+             );
+          });
+        }
+        catch(error){
+          console.log(error);
+        }
       }
     };
   

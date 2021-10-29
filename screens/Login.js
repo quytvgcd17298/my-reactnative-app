@@ -85,8 +85,7 @@ const Login = ({ navigation }) => {
                  style={styles.input}
                  onChangeText={(value) => setAge(value)}
                  value={age}
-                 placeholder="Enter your age"
-                 secureTextEntry = {true}></TextInput>
+                 placeholder="Enter your age"></TextInput>
             </View>
             <CustomButton
             title ="Login"
