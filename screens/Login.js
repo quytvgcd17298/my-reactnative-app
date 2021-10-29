@@ -14,18 +14,33 @@ const Login = ({ navigation }) => {
   
     useEffect(() => {
         createTable();
-        //checkLogin();
+        checkLogin();
     }, []);
-    const checkLogin = async () => {
-      try {
+    const checkLogin = () => {
+/*       try {
         const value = await AsyncStorage.getItem("Username");
         if (value !== null) {
           navigation.navigate("Home");
         }
       } catch (error) {
         console.log(error);
+      } */
+
+      try{
+        db.transaction((tx) =>{
+          tx.executeSql("SECLECT Name, Age FROM Users", [], (tx, result) => {
+            var len = result.rows.length;
+            if(len > 0){
+              navigation.navigate("Home");
+            }
+          });
+        });
       }
-    };
+      catch(error){
+        console.log(error);
+      }
+    }; 
+
   
     const login = async () => {
       if (name.length === 0 || age.length === 0) {
